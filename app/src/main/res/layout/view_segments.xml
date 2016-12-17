@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/segment_image_segments_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:src="@drawable/segment_icon_paper_writing"
+        />
+
+    <TextView
+        android:id="@+id/segment_name_text_segments_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="CONTENTS"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_extra_large"
+        android:gravity="center"
+        android:layout_weight="1"
+        />
+
+
+</LinearLayout>

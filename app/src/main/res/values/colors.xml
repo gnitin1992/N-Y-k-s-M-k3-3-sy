@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e43138</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="orangeBackground">#FF9800</color>
+    <color name="smokeWhite">#EFEFEF</color>
+
+    <array name="subjectColors">
+
+        <item>#C3262E</item>
+        <item>#F0802D</item>
+        <item>#7DA756</item>
+        <item>#0184AB</item>
+        <item>#FFD254</item>
+        <item>#BA2C55</item>
+        <item>#3C3152</item>
+        <item>#343234</item>
+
+    </array>
+
+    <color name="subjectRed">#C3262E</color>
+    <color name="subjectOrange">#F0802D</color>
+    <color name="subjectGreen">#7DA756</color>
+    <color name="subjectLightBlue">#0184AB</color>
+    <color name="subjectYello">#FFD254</color>
+    <color name="subjectPink">#BA2C55</color>
+    <color name="subjectGrey">#3C3152</color>
+
+
+</resources>

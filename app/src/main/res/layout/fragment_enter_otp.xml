@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home"
+    android:padding="@dimen/activity_horizontal_margin">
+
+
+
+
+    <LinearLayout
+        android:id="@+id/footer_layout_enter_otp_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/logo_padding"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RELAX!!!"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_large"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="till we verify your number"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_large"
+            />
+
+        <EditText
+            android:id="@+id/otp_edit_enter_otp_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_otp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            />
+
+        <Button
+            android:id="@+id/submit_button_enter_otp_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_submit"
+            android:background="@color/orangeBackground"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo_image_enter_otp_fragment"
+        android:layout_width="@dimen/logo_size_mini"
+        android:layout_height="@dimen/logo_size_mini"
+        android:src="@drawable/logo_app"
+        android:padding="@dimen/logo_padding_mini"
+        android:layout_above="@id/footer_layout_enter_otp_fragment"
+        android:layout_centerHorizontal="true"
+        />
+
+    <include layout="@layout/layout_header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_above="@id/logo_image_enter_otp_fragment"
+        />
+
+</RelativeLayout>

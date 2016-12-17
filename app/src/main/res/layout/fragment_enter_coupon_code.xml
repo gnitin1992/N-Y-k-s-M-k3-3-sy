@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true">
+
+        <LinearLayout
+            android:id="@+id/enter_otp_layout_enter_coupon_code_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/logo_padding">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_enter_coupon_code"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_large" />
+
+            <EditText
+                android:id="@+id/coupon_edit_enter_coupon_code_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/edit_coupon_code"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+            <Button
+                android:id="@+id/submit_button_enter_coupon_code_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/orangeBackground"
+                android:text="@string/button_submit" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:padding="@dimen/logo_padding">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/text_get_coupon_code"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_large" />
+
+            <Button
+                android:id="@+id/click_here_button_enter_coupon_code_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/orangeBackground"
+                android:text="@string/button_click_here" />
+
+            <Spinner
+                android:id="@+id/centers_spinner_enter_coupon_code_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/margin"
+                android:background="@android:color/white" />
+
+            <TextView
+                android:id="@+id/center_details_text_enter_coupon_code_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@android:color/white"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

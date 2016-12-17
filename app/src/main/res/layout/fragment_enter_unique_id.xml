@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home"
+    android:padding="@dimen/activity_horizontal_margin">
+
+
+    <LinearLayout
+        android:id="@+id/footer_layout_enter_unique_id_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/logo_padding"
+        >
+
+        <EditText
+            android:id="@+id/mobile_edit_enter_unique_id_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_unique_id"
+            android:textColorHint="@android:color/white"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            />
+
+        <Button
+            android:id="@+id/submit_button_enter_unique_id_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_submit"
+            android:background="@color/orangeBackground"
+            />
+        <Button
+            android:id="@+id/skip_button_enter_unique_id_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_skip"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo_image_enter_unique_id_fragment"
+        android:layout_width="@dimen/logo_size_mini"
+        android:layout_height="@dimen/logo_size_mini"
+        android:src="@drawable/logo_app"
+        android:padding="@dimen/logo_padding_mini"
+        android:layout_above="@id/footer_layout_enter_unique_id_fragment"
+        android:layout_centerHorizontal="true"
+        />
+
+    <include layout="@layout/layout_header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_above="@id/logo_image_enter_unique_id_fragment"
+        />
+
+
+</RelativeLayout>

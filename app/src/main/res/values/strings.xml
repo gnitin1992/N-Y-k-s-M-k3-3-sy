@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Studies Made Simple</string>
+
+
+    <!-- All button text -->
+    <string name="button_text_submit">Submit</string>
+    <string name="button_text_no_code">I do not have a coupon</string>
+
+
+    <!--- All the fragments -->
+    <!-- Available Courses Fragment -->
+
+    <!-- Center List Fragment -->
+    <!-- Chapters Fragment -->
+    <!-- Demo Contents Fragment -->
+    <!-- Enter Coupon Code Fragment -->
+    <string name="text_enter_coupon_code">Please enter your coupon code</string>
+    <string name="text_get_coupon_code">To get coupon code</string>
+    <string name="edit_coupon_code">Coupon code</string>
+
+
+    <!-- Enter Mobile Number Fragment -->
+    <string name="edit_mobile_number">Mobile</string>
+    <string name="button_next">Next</string>
+
+    <!-- Enter OTP Fragment -->
+    <string name="edit_otp">OTP</string>
+    <string name="button_submit">Submit</string>
+
+    <!-- Enter UniqueId Fragment -->
+    <string name="edit_unique_id">Unique Id</string>
+    <string name="button_skip">Dont have ? Click Here</string>
+    <!-- Offline Content Fragment -->
+    <!-- Ofline Stream Content Fragment -->
+    <!-- Online Content Fragment -->
+    <!-- Registration Fragment -->
+    <string name="edit_first_name">First Name</string>
+    <string name="edit_last_name">Last Name</string>
+
+    <!--- Segment Fragment  -->
+    <string name="button_click_here">Click Here</string>
+
+    <!-- Splash Screen Fragment -->
+    <string name="text_owner">Nayak\'s Tutorials</string>
+    <string name="text_presents">presents</string>
+    <!-- Subjects Fragment -->
+
+    <string name="otp_auth_key">132497AnFJ0FQBW583e87da</string>
+
+    <string-array name="streams">
+        <item>10th SSC</item>
+        <item>10th CBSE</item>
+        <item>10th ICSE</item>
+        <item>HSC</item>
+        <item>CET</item>
+        <item>CAT</item>
+    </string-array>
+
+</resources>

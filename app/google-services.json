@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "335142860349",
+    "firebase_url": "https://studies-made-simple.firebaseio.com",
+    "project_id": "studies-made-simple",
+    "storage_bucket": "studies-made-simple.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335142860349:android:06ca4fc2b2f3ac22",
+        "android_client_info": {
+          "package_name": "net.studiesmadesimple.nayaks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335142860349-2k7r7oqd5msmdqcn6j8kq2om4smse3fp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAFw7mIkm4ijEDIUCrBtueH9PXoKDVE7Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335142860349:android:3185c5fc58874ac0",
+        "android_client_info": {
+          "package_name": "net.studiesmadesimple.nayaks.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335142860349-2k7r7oqd5msmdqcn6j8kq2om4smse3fp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAFw7mIkm4ijEDIUCrBtueH9PXoKDVE7Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

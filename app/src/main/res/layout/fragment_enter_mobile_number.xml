@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home"
+    android:padding="@dimen/activity_horizontal_margin">
+
+
+    <LinearLayout
+        android:id="@+id/footer_layout_enter_mobile_number_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/logo_padding"
+        >
+
+        <TextView
+            android:id="@+id/static_text_relax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RELAX!!!\nYou'll shortly receive an OTP\nPlease enter it here and click on submit."
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_large"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/static_text_till_we"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="till we verify your number"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_large"
+            android:visibility="gone"
+            />
+
+        <EditText
+            android:id="@+id/mobile_edit_enter_mobile_number_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_mobile_number"
+            android:textColorHint="@android:color/white"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            />
+
+        <Button
+            android:id="@+id/next_button_enter_mobile_number_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_next"
+            android:background="@color/orangeBackground"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo_image_enter_mobile_number_fragment"
+        android:layout_width="@dimen/logo_size_mini"
+        android:layout_height="@dimen/logo_size_mini"
+        android:src="@drawable/logo_app"
+        android:padding="@dimen/logo_padding_mini"
+        android:layout_above="@id/footer_layout_enter_mobile_number_fragment"
+        android:layout_centerHorizontal="true"
+        />
+
+    <include layout="@layout/layout_header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_above="@id/logo_image_enter_mobile_number_fragment"
+        />
+
+
+</RelativeLayout>

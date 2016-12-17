@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="450dp"
+    android:background="#24323F"
+    android:layout_margin="@dimen/margin_small">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@android:drawable/alert_dark_frame"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            >
+
+
+            <TextView
+                android:id="@+id/topic_name_text_chapters_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="THERE"
+                android:textColor="#FFF"
+                android:textSize="@dimen/text_size_extra_large"
+                />
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="HERE"-->
+                <!--android:textColor="#FFF"-->
+                <!--android:textSize="@dimen/text_size"-->
+                <!--/>-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:fabSize="mini"-->
+        <!--app:backgroundTint="@color/colorAccent"-->
+        <!--/>-->
+
+</RelativeLayout>
