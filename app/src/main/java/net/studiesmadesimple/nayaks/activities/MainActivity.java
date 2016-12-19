@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 backCounter=0;
-                finish();
+//                finish();
+                System.exit(0);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
