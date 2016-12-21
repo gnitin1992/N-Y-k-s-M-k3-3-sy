@@ -17,7 +17,7 @@ public interface Constants {
     String MOBILE_NUMBER = "mobileNumber";
     String MOBILE_NUMBER_VERIFIED = "mobileNumberVerified";
     String STREAM_ID = "streamId";
-    String SEGMENT_ID= "segmentId";
+    String SEGMENT_ID = "segmentId";
     String UNIQUE_ID = "uniqueId";
     String UNIQUE_ID_ENTERED = "uniqueIdEntered";
     String URL = "url";
@@ -54,7 +54,7 @@ public interface Constants {
     //l
     //m
     //n
-    String NOTIFICATIONS_RECYCLER_ADAPTER = " NOTIFICATIONS RECYCLER ADAPTER ";
+    String NOTIFICATIONS_FRAGMENT = " NOTIFICATIONS FRAGMENT ";
     //o
     String OFFLINE_CONTENT_FRAGMENT = " ONLINE CONTENT FRAGMENT ";
 
@@ -78,7 +78,6 @@ public interface Constants {
     //z
 
 
-
     // all the adapters
     //a
     String ASSESSMENT_RECYCLER_ADAPTER = " ASSESSMENT RECYCLER ADAPTER ";
@@ -100,9 +99,10 @@ public interface Constants {
     //l
     //m
     //n
+    String NOTIFICATIONS_RECYCLER_ADAPTER = " NOTIFICATIONS RECYCLER ADAPTER ";
     //o
     //p
-    String PDF_RECYCLER_ADAPTER =" PDF RECYCLER ADAPTER ";
+    String PDF_RECYCLER_ADAPTER = " PDF RECYCLER ADAPTER ";
     //q
     //r
     //s
@@ -123,21 +123,21 @@ public interface Constants {
 //    String BASE_URL = "http://ec2-35-154-36-20.ap-south-1.compute.amazonaws.com/mobile-api/";
     String BASE_URL = "http://studiesmadesimple.com/mobile-api/";
 
-    String streamUrl = BASE_URL+"get-all-stream";
-    String segmentUrl = BASE_URL+"get-all-segment";
+    String streamUrl = BASE_URL + "get-all-stream";
+    String segmentUrl = BASE_URL + "get-all-segment";
 
-    String checkUniqueCodeUrl = BASE_URL+"check-unique-code";
-    String registerUrl = BASE_URL+"registration";
+    String checkUniqueCodeUrl = BASE_URL + "check-unique-code";
+    String registerUrl = BASE_URL + "registration";
 
-    String demoContentUrl = BASE_URL+"demo-content";
-    String verifyCouponCodeUrl = BASE_URL+"get-unique-code";
+    String demoContentUrl = BASE_URL + "demo-content";
+    String verifyCouponCodeUrl = BASE_URL + "get-unique-code";
 
-    String fetchCentersUrl = BASE_URL+"get-all-center";
-    String segmentSelectionUrl= BASE_URL+"get-segment-selection";
+    String fetchCentersUrl = BASE_URL + "get-all-center";
+    String segmentSelectionUrl = BASE_URL + "get-segment-selection";
 
-    String subjectUrl= BASE_URL+"get-subject";
+    String subjectUrl = BASE_URL + "get-subject";
 
-    String chaptersUrl = BASE_URL+"get-chapter";
-    String notificationsUrl = BASE_URL+"set-token";
+    String chaptersUrl = BASE_URL + "get-chapter";
+    String notificationsUrl = BASE_URL + "set-token";
 
 }

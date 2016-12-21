@@ -16,13 +16,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.DownloadListener;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import net.studiesmadesimple.nayaks.R;
-import net.studiesmadesimple.nayaks.custom.CustomMediaController;
+import net.studiesmadesimple.nayaks.custom.CustomDeleteMediaController;
+import net.studiesmadesimple.nayaks.custom.CustomDownloadMediaController;
 import net.studiesmadesimple.nayaks.data.TopicData;
 import net.studiesmadesimple.nayaks.database.MyDatabaseHelper;
 import net.studiesmadesimple.nayaks.utils.Constants;
@@ -47,7 +47,7 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
     private DownloadManager downloadManager;
     private long downloadId;
 
-    private CustomMediaController mediaController;
+    private CustomDownloadMediaController mediaController;
     private MediaController mediaController1;
     private MyDatabaseHelper databaseHelper;
     private TopicData topic;
@@ -76,13 +76,24 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
 
         HelperMethods.showProgressDialog(getActivity(), Constants.APP_NAME, "Loading");
 
-        if (comingFrom.equalsIgnoreCase("demo")|| comingFrom.equalsIgnoreCase("offline")) {
+        if (comingFrom.equalsIgnoreCase("demo")) {
 
             mediaController1 = new MediaController(getActivity());
             vd.setMediaController(mediaController1);
+        } else if (comingFrom.equalsIgnoreCase("offline")) {
+
+            mediaController1 = new CustomDeleteMediaController(getActivity(), new CustomDeleteMediaController.CustomCallback() {
+                @Override
+                public void clicked(boolean isClicked) {
+
+                    deleteVideo(uri);
+                    Toast.makeText(getActivity(), "Video has been deleted offline", Toast.LENGTH_SHORT).show();
+                }
+            });
+            vd.setMediaController(mediaController1);
         } else {
 
-            mediaController = new CustomMediaController(getActivity(), new CustomMediaController.CustomCallback() {
+            mediaController = new CustomDownloadMediaController(getActivity(), new CustomDownloadMediaController.CustomCallback() {
                 @Override
                 public void clicked(boolean isClicked) {
 
@@ -123,6 +134,27 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
         vd.start();
     }
 
+    public void deleteVideo(Uri uris) {
+
+//        getActivity().onBackPressed();
+
+        databaseHelper = new MyDatabaseHelper(getActivity());
+        databaseHelper.removeOfflineVideo(topic.getTopicId());
+
+
+
+        File f = new File(String.valueOf(uris));
+        boolean a = f.delete();
+
+        if (a){
+
+            Toast.makeText(getActivity(), "File deleted", Toast.LENGTH_SHORT).show();
+            vd.setVideoURI(null);
+
+        }
+
+    }
+
     public long downloadVideo() {
 
         long downloadReference;
@@ -146,7 +178,7 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
             File file = new File(getActivity().getExternalFilesDir(
                     Environment.DIRECTORY_MOVIES), topicName);
             filePath = file.getAbsolutePath();
-            request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_MOVIES,topicName);
+            request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_MOVIES, topicName);
 
         }
 
@@ -164,9 +196,9 @@ public class FullScreenVideoFragment extends Fragment implements MediaPlayer.OnP
         public void onReceive(Context ctxt, Intent intent) {
             // your code
 
-            Toast.makeText(ctxt,"Download complete", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctxt, "Download complete", Toast.LENGTH_SHORT).show();
             databaseHelper = new MyDatabaseHelper(ctxt);
-            databaseHelper.addOfflineVideo(topic.getTopicId(),filePath);
+            databaseHelper.addOfflineVideo(topic.getTopicId(), filePath);
         }
     };
 

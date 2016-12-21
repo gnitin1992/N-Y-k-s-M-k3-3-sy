@@ -2,6 +2,7 @@ package net.studiesmadesimple.nayaks.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -77,6 +78,9 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
         v = inflater.inflate(R.layout.fragment_subjects, container, false);
 
         Log.d(Constants.LOG_TAG, Constants.SUBJECTS_FRAGMENT);
+
+        getActivity().setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         findViews();
         measuringTheLayout();

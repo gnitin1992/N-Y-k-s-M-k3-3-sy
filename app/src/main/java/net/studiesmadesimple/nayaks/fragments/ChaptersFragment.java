@@ -1,5 +1,6 @@
 package net.studiesmadesimple.nayaks.fragments;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -39,7 +40,6 @@ import java.util.List;
  */
 
 public class ChaptersFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener,
-//        ExpandableListView.OnChildClickListener {
         ExpandableListView.OnGroupClickListener,ExpandableListView.OnChildClickListener {
 
     private View v;
@@ -82,6 +82,9 @@ public class ChaptersFragment extends Fragment implements Response.Listener<JSON
         v = inflater.inflate(R.layout.fragment_chapters, container, false);
 
         Log.d(Constants.LOG_TAG, Constants.CHAPTERS_FRAGMENT);
+
+        getActivity().setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         findViews();
 
@@ -263,6 +266,14 @@ public class ChaptersFragment extends Fragment implements Response.Listener<JSON
 
             if(contentType.equalsIgnoreCase("test")|| contentType.equalsIgnoreCase("pdf")){
 
+
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.CONTENT_TYPE,contentType);
+                bundle.putString(Constants.URL,topicData.getTopicUrl());
+
+                Fragment fragment = new OpenFileFragment();
+                fragment.setArguments(bundle);
+                HelperMethods.showFragment(getActivity(), fragment,true);
 
 
             }

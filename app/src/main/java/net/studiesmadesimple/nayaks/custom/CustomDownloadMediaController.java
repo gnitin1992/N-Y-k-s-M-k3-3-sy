@@ -19,7 +19,7 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  * Created by sagar on 12/11/2016.
  */
 
-public class CustomMediaController extends MediaController {
+public class CustomDownloadMediaController extends MediaController {
 
     private Context context;
     private ImageButton customButton;
@@ -32,7 +32,7 @@ public class CustomMediaController extends MediaController {
         public void clicked(boolean isClicked);
     }
 
-    public CustomMediaController(Context context,CustomCallback customCallback) {
+    public CustomDownloadMediaController(Context context, CustomCallback customCallback) {
         super(context);
         this.context = context;
         this.customCallback = customCallback;

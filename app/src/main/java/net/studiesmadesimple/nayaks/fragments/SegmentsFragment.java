@@ -154,9 +154,20 @@ public class SegmentsFragment extends Fragment implements AdapterView.OnItemClic
         bundle.putString(Constants.SEGMENT_ID,segmentsData.get(i).getSegmentId());
         bundle.putString(Constants.CONTENT_TYPE,segmentsData.get(i).getContentType());
 
-        Fragment fragment = new ExtendedSegmentsFragment();
-        fragment.setArguments(bundle);
-        HelperMethods.showFragment(getActivity(),fragment,true);
+        if (segmentsData.get(i).getContentType().equalsIgnoreCase("notification")){
+
+            Fragment fragment = new NotificationsFragment();
+            fragment.setArguments(bundle);
+            HelperMethods.showFragment(getActivity(),fragment,true);
+        }
+        else{
+
+            Fragment fragment = new ExtendedSegmentsFragment();
+            fragment.setArguments(bundle);
+            HelperMethods.showFragment(getActivity(),fragment,true);
+        }
+
+
     }
 
     @Override

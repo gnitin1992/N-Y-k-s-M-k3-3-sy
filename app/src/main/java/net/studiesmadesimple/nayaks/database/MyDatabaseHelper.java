@@ -373,16 +373,24 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addOfflineVideo(String id,String path) {
+    public void addOfflineVideo(String id, String path) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_ID, id);
-        contentValues.put(KEY_OFFLINE_PATH,path);
+        contentValues.put(KEY_OFFLINE_PATH, path);
 
         // Inserting Row
         db.insert(TABLE_OFFLINE_VIDEOS_LIST, null, contentValues);
+        db.close(); // Closing database connection
+
+    }
+
+    public void removeOfflineVideo(String id) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_OFFLINE_VIDEOS_LIST, KEY_ID + "=" + id, null);
         db.close(); // Closing database connection
 
     }
@@ -416,7 +424,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
                 String id = cursor.getString(cursor.getColumnIndex(KEY_ID));
                 String path = cursor.getString(cursor.getColumnIndex(KEY_OFFLINE_PATH));
-                return new String[]{id,path};
+                return new String[]{id, path};
 
             } while (cursor.moveToNext());
         }

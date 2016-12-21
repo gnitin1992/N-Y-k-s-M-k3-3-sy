@@ -22,6 +22,7 @@ import net.studiesmadesimple.nayaks.fragments.EnterMobileNumberFragment;
 import net.studiesmadesimple.nayaks.fragments.EnterUniqueIdFragment;
 import net.studiesmadesimple.nayaks.fragments.ExtendedSegmentsFragment;
 import net.studiesmadesimple.nayaks.fragments.FullScreenVideoFragment;
+import net.studiesmadesimple.nayaks.fragments.NotificationsFragment;
 import net.studiesmadesimple.nayaks.fragments.OpenFileFragment;
 import net.studiesmadesimple.nayaks.fragments.RegistrationFragment;
 import net.studiesmadesimple.nayaks.fragments.SegmentsFragment;
@@ -125,6 +126,9 @@ public class MainActivity extends AppCompatActivity{
 
             super.onBackPressed();
         }else if(f instanceof OpenFileFragment){
+
+            super.onBackPressed();
+        }else if(f instanceof NotificationsFragment){
 
             super.onBackPressed();
         }

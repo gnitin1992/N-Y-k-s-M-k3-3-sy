@@ -76,8 +76,6 @@ public class HelperMethods {
         }
 
 
-
-
     }
 
     public static void setScreenDimensions(Context context){

@@ -19,25 +19,16 @@ import java.util.List;
  * Created by sagar on 12/11/2016.
  */
 
-public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<NotificationsRecyclerAdapter.ViewHolder> implements View.OnClickListener{
+public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<NotificationsRecyclerAdapter.ViewHolder>{
 
     private Context context;
 
     private List<NotificationData> notificationDatas;
-    private TextView a;
+    private TextView title,message,date;
 
-    private NotificationsCallback callback;
-
-
-    public interface NotificationsCallback {
-
-        public void position(int position);
-    }
-
-    public NotificationsRecyclerAdapter(Context context, List<NotificationData> notificationDatas, NotificationsCallback callback) {
+    public NotificationsRecyclerAdapter(Context context, List<NotificationData> notificationDatas) {
         this.context = context;
         this.notificationDatas = notificationDatas;
-        this.callback = callback;
         Log.d(Constants.LOG_TAG,Constants.NOTIFICATIONS_RECYCLER_ADAPTER);
     }
 
@@ -55,7 +46,7 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
     public NotificationsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_test_video_notifications, parent, false);
+                .inflate(R.layout.row_notifications, parent, false);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -63,14 +54,17 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
 
     public void findViews(ViewHolder holder){
 
-        a = (TextView) holder.v.findViewById(R.id.a);
+        title = (TextView) holder.v.findViewById(R.id.title_text_notifications_fragment);
+        message = (TextView) holder.v.findViewById(R.id.message_text_notifications_fragment);
+        date = (TextView) holder.v.findViewById(R.id.date_text_notifications_fragment);
 
     }
 
     public void setViews(int position){
 
-        a.setText(notificationDatas.get(position).getMessage());
-        a.setOnClickListener(this);
+        title.setText(notificationDatas.get(position).getHeading());
+        message.setText(notificationDatas.get(position).getMessage());
+        date.setText(notificationDatas.get(position).getDeliveredDate());
 
     }
 
@@ -85,16 +79,6 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
     @Override
     public int getItemCount() {
         return notificationDatas.size();
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        String tagDetails[] = view.getTag().toString().split("_");
-        int position = Integer.parseInt(tagDetails[1]);
-
-        callback.position(position);
-
     }
 
 
