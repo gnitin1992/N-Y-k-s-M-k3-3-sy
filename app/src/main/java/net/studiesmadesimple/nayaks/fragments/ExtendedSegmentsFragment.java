@@ -42,7 +42,7 @@ import java.util.List;
  * Created by studiesmadesimple on 10/16/2016.
  */
 
-public class ExtendedSegmentsFragment extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener{
+public class ExtendedSegmentsFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     private View v;
 
@@ -51,7 +51,7 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
     private RecyclerView.LayoutManager layoutManager;
     private boolean isInternetAvailable = false;
     private Bundle bundle;
-    private String segmentId,contentType;
+    private String segmentId, contentType;
     private MyDatabaseHelper databaseHelper;
 
 
@@ -65,8 +65,8 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
         // check internet connection
         isInternetAvailable = HelperMethods.isInternetAvailable(getActivity());
         bundle = this.getArguments();
-        segmentId = bundle.getString(Constants.SEGMENT_ID,"");
-        contentType = bundle.getString(Constants.CONTENT_TYPE,"");
+        segmentId = bundle.getString(Constants.SEGMENT_ID, "");
+        contentType = bundle.getString(Constants.CONTENT_TYPE, "");
         databaseHelper = new MyDatabaseHelper(getActivity());
     }
 
@@ -74,9 +74,9 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        v = inflater.inflate(R.layout.fragment_subjects,container,false);
+        v = inflater.inflate(R.layout.fragment_subjects, container, false);
 
-        Log.d(Constants.LOG_TAG,Constants.SUBJECTS_FRAGMENT);
+        Log.d(Constants.LOG_TAG, Constants.SUBJECTS_FRAGMENT);
 
         findViews();
         measuringTheLayout();
@@ -86,13 +86,13 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
         return v;
     }
 
-    public void findViews(){
+    public void findViews() {
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_subjects_fragment);
 
     }
 
-    public void measuringTheLayout(){
+    public void measuringTheLayout() {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -105,49 +105,32 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
     }
 
 
-    public void fetchSubjects(){
+    public void fetchSubjects() {
 
-        try{
+        try {
 
-            if(!segmentId.equalsIgnoreCase("000")){
+            if (!segmentId.equalsIgnoreCase("000")) {
 
 
-                HelperMethods.showProgressDialog(getActivity(),Constants.APP_NAME,"Loading...");
+                HelperMethods.showProgressDialog(getActivity(), Constants.APP_NAME, "Loading...");
 
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
-                String streamId = sharedPreferences.getString(Constants.STREAM_ID,"");
-                String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID,"");
+                String streamId = sharedPreferences.getString(Constants.STREAM_ID, "");
+                String uniqueId = sharedPreferences.getString(Constants.UNIQUE_ID, "");
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("segment_id",segmentId);
-                jsonObject.put("stream_id",streamId);
-                jsonObject.put("unique_id",uniqueId);
+                jsonObject.put("segment_id", segmentId);
+                jsonObject.put("stream_id", streamId);
+                jsonObject.put("unique_id", uniqueId);
 
-                JsonObjectRequest jsonObjectRequest;
-
-                if(contentType.equalsIgnoreCase("pdf")|| contentType.equalsIgnoreCase("test")){
-
-                    jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.segmentSelectionUrl, jsonObject,
-                            this,this);
-
-                }
-                else{
-
-                    jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.subjectUrl, jsonObject,
-                            this,this);
-                }
-
-//                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.segmentSelectionUrl, jsonObject,
-
-
-
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.segmentSelectionUrl, jsonObject,
+                        this, this);
                 RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
                 requestQueue.add(jsonObjectRequest);
             }
 
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -155,7 +138,7 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
 
     }
 
-    public void addSubjects(){
+    public void addSubjects() {
 
         for (int i = 0; i < subjectsDatas.size(); i++) {
 
@@ -164,7 +147,8 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
 
         }
     }
-    public void addPDFs(){
+
+    public void addPDFs() {
 
         for (int i = 0; i < pdfDatas.size(); i++) {
 
@@ -175,7 +159,7 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
 
     }
 
-    public void addTests(){
+    public void addTests() {
 
 
         for (int i = 0; i < assessmentDatas.size(); i++) {
@@ -187,74 +171,79 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
 
     }
 
-    public void setCustomAdapter(){
+    public void setCustomAdapter() {
 
-        if (contentType.equalsIgnoreCase("video")){
+//        if (contentType.equalsIgnoreCase("video")) {
 
             // specify an adapter (see also next example)
-            adapter = new SubjectsRecyclerAdapter(getActivity(), subjectsDatas,new SubjectsRecyclerAdapter.SubjectsRecyclerAdapterCallback() {
+            adapter = new SubjectsRecyclerAdapter(getActivity(), subjectsDatas, new SubjectsRecyclerAdapter.SubjectsRecyclerAdapterCallback() {
                 @Override
                 public void onStreamSelected(String whichStream, int position) {
 
                     Bundle bundle = new Bundle();
                     bundle.putString("subjectId", subjectsDatas.get(position).getSubjectId());
-                    bundle.putString("whichStream",whichStream);
+                    bundle.putString("segmentId",segmentId);
+                    bundle.putString("contentType",contentType);
+                    bundle.putString("whichStream", whichStream);
 
-                    if(whichStream.equalsIgnoreCase("online")&& (isInternetAvailable == false)){
+                    if (whichStream.equalsIgnoreCase("online") && (isInternetAvailable == false)) {
 
-                        Toast.makeText(getActivity(),"Please check the internet connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please check the internet connection.", Toast.LENGTH_SHORT).show();
 
-                    }else{
+                    }
+                    else if (whichStream.equalsIgnoreCase("offline") && ((contentType.equalsIgnoreCase("pdf"))||(contentType.equalsIgnoreCase("test")))){
+
+                        Toast.makeText(getActivity(),"This content is not available offline", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
 
                         Fragment fragment = new ChaptersFragment();
                         fragment.setArguments(bundle);
-                        HelperMethods.showFragment(getActivity(),fragment,true);
+                        HelperMethods.showFragment(getActivity(), fragment, true);
 
                     }
 
                 }
             });
 
-        }
-        else if(contentType.equalsIgnoreCase("pdf")){
-
-            // specify an adapter (see also next example)
-            adapter = new PdfRecyclerAdapter(getActivity(), pdfDatas, new PdfRecyclerAdapter.PdfCallback(){
-                @Override
-                public void position(int position) {
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Constants.CONTENT_TYPE,"pdf");
-                    bundle.putString(Constants.URL,pdfDatas.get(position).getUrl());
-
-                    Fragment fragment = new OpenFileFragment();
-                    fragment.setArguments(bundle);
-
-                    HelperMethods.showFragment(getActivity(),fragment,true);
-                }
-            });
-
-        }
-        else if(contentType.equalsIgnoreCase("test")){
-
-            // specify an adapter (see also next example)
-            adapter = new AssessmentRecyclerAdapter(getActivity(), assessmentDatas, new AssessmentRecyclerAdapter.AssessmentCallback(){
-                @Override
-                public void position(int position) {
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Constants.CONTENT_TYPE,"test");
-                    bundle.putString(Constants.URL,assessmentDatas.get(position).getUrl());
-
-                    Fragment fragment = new OpenFileFragment();
-                    fragment.setArguments(bundle);
-
-                    HelperMethods.showFragment(getActivity(),fragment,true);
-
-                }
-            });
-
-        }
+//        } else if (contentType.equalsIgnoreCase("pdf")) {
+//
+//            // specify an adapter (see also next example)
+//            adapter = new PdfRecyclerAdapter(getActivity(), pdfDatas, new PdfRecyclerAdapter.PdfCallback() {
+//                @Override
+//                public void position(int position) {
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(Constants.CONTENT_TYPE, "pdf");
+//                    bundle.putString(Constants.URL, pdfDatas.get(position).getUrl());
+//
+//                    Fragment fragment = new OpenFileFragment();
+//                    fragment.setArguments(bundle);
+//
+//                    HelperMethods.showFragment(getActivity(), fragment, true);
+//                }
+//            });
+//
+//        } else if (contentType.equalsIgnoreCase("test")) {
+//
+//            // specify an adapter (see also next example)
+//            adapter = new AssessmentRecyclerAdapter(getActivity(), assessmentDatas, new AssessmentRecyclerAdapter.AssessmentCallback() {
+//                @Override
+//                public void position(int position) {
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(Constants.CONTENT_TYPE, "test");
+//                    bundle.putString(Constants.URL, assessmentDatas.get(position).getUrl());
+//
+//                    Fragment fragment = new OpenFileFragment();
+//                    fragment.setArguments(bundle);
+//
+//                    HelperMethods.showFragment(getActivity(), fragment, true);
+//
+//                }
+//            });
+//
+//        }
 
 
         recyclerView.setAdapter(adapter);
@@ -267,15 +256,15 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
         HelperMethods.dismissProgressDialog();
         subjectsDatas = new ArrayList<SubjectData>();
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME,Context.MODE_PRIVATE);
-        String streamId = sharedPreferences.getString(Constants.STREAM_ID,"");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        String streamId = sharedPreferences.getString(Constants.STREAM_ID, "");
 
         try {
 
             String responsCode = response.getString("status");
             if (responsCode.equalsIgnoreCase("200")) {
 
-                if(contentType.equalsIgnoreCase("video")){
+//                if (contentType.equalsIgnoreCase("video")) {
 
                     JSONArray jsonArray = response.getJSONArray("subject");
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -284,46 +273,45 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
                         String subjectId = jsonObject.getString("id");
                         String subjectName = jsonObject.getString("name");
 
-                        subjectsDatas.add(new SubjectData(subjectId,subjectName,streamId,segmentId));
+                        subjectsDatas.add(new SubjectData(subjectId, subjectName, streamId, segmentId));
                     }
                     addSubjects();
+//                }
 
-                }
-                else if(contentType.equalsIgnoreCase("pdf")){
-
-                    pdfDatas = new ArrayList<PDFData>();
-                    String baseUrl = response.getString("content_path");
-                    JSONArray jsonArray = response.getJSONArray("pdf");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String pdfId = jsonObject.getString("id");
-                        String pdfName = jsonObject.getString("title");
-                        String pdfFileName = jsonObject.getString("file_name");
-
-                        String url = baseUrl+contentType+"/"+pdfFileName;
-
-                        pdfDatas.add(new PDFData(pdfId,segmentId,pdfName,url));
-                    }
-                    addPDFs();
-
-                }
-                else if(contentType.equalsIgnoreCase("test")){
-
-                    assessmentDatas = new ArrayList<AssessmentData>();
-                    JSONArray jsonArray = response.getJSONArray("test");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String testId = jsonObject.getString("id");
-                        String testName = jsonObject.getString("title");
-                        String testUrl = jsonObject.getString("link");
-
-                        assessmentDatas.add(new AssessmentData(testId,"",testName,testUrl));
-                    }
-                    addTests();
-
-                }
+//                } else if (contentType.equalsIgnoreCase("pdf")) {
+//
+//                    pdfDatas = new ArrayList<PDFData>();
+//                    String baseUrl = response.getString("content_path");
+//                    JSONArray jsonArray = response.getJSONArray("pdf");
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        String pdfId = jsonObject.getString("id");
+//                        String pdfName = jsonObject.getString("title");
+//                        String pdfFileName = jsonObject.getString("file_name");
+//
+//                        String url = baseUrl + contentType + "/" + pdfFileName;
+//
+//                        pdfDatas.add(new PDFData(pdfId, segmentId, pdfName, url));
+//                    }
+//                    addPDFs();
+//
+//                } else if (contentType.equalsIgnoreCase("test")) {
+//
+//                    assessmentDatas = new ArrayList<AssessmentData>();
+//                    JSONArray jsonArray = response.getJSONArray("test");
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        String testId = jsonObject.getString("id");
+//                        String testName = jsonObject.getString("title");
+//                        String testUrl = jsonObject.getString("link");
+//
+//                        assessmentDatas.add(new AssessmentData(testId, "", testName, testUrl));
+//                    }
+//                    addTests();
+//
+//                }
 
                 setCustomAdapter();
 
@@ -346,7 +334,7 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
     public void onErrorResponse(VolleyError error) {
 
         HelperMethods.dismissProgressDialog();
-        Toast.makeText(getActivity(),"Something went wrong. Try again later.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Something went wrong. Try again later.", Toast.LENGTH_SHORT).show();
 
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.studiesmadesimple.nayaks.R;
@@ -25,6 +26,7 @@ public class SubjectsRecyclerAdapter extends RecyclerView.Adapter<SubjectsRecycl
     private Context context;
     private List<SubjectData> subjectDatas;
     private TextView subject,online,offline;
+    private ImageView subjectAvatar;
 
     private SubjectsRecyclerAdapterCallback callback;
     private List<AssessmentData> assessmentDatas;
@@ -75,9 +77,11 @@ public class SubjectsRecyclerAdapter extends RecyclerView.Adapter<SubjectsRecycl
         subject = (TextView)holder.view.findViewById(R.id.subject_text_subjects_fragment);
         online = (TextView)holder.view.findViewById(R.id.online_text_subjects_fragment);
         offline = (TextView)holder.view.findViewById(R.id.offline_text_subjects_fragment);
+        subjectAvatar = (ImageView)holder.view.findViewById(R.id.subject_image_subjects_fragment);
     }
 
     public void setViews(int position){
+
 
 
         subject.setText(subjectDatas.get(position).getSubjectName());

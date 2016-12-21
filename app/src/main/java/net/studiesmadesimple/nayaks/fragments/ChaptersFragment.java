@@ -39,14 +39,14 @@ import java.util.List;
  */
 
 public class ChaptersFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener,
-        ExpandableListView.OnChildClickListener {
-//        ExpandableListView.OnGroupClickListener,ExpandableListView.OnChildClickListener {
+//        ExpandableListView.OnChildClickListener {
+        ExpandableListView.OnGroupClickListener,ExpandableListView.OnChildClickListener {
 
     private View v;
     private ExpandableListView expandableListView;
 
     private Bundle bundle;
-    private String whichStream, subjectId;
+    private String whichStream, subjectId,segmentId,contentType;
     private boolean isInternetAvailable, isChaptersLoaded;
     private MyDatabaseHelper databaseHelper;
     private List<ChapterData> chapterDatas;
@@ -69,6 +69,8 @@ public class ChaptersFragment extends Fragment implements Response.Listener<JSON
         bundle = this.getArguments();
         whichStream = bundle.getString("whichStream");
         subjectId = bundle.getString("subjectId");
+        segmentId = bundle.getString("segmentId");
+        contentType = bundle.getString("contentType");
 
     }
 
@@ -137,6 +139,7 @@ public class ChaptersFragment extends Fragment implements Response.Listener<JSON
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("subject_id", subjectId);
+            jsonObject.put("segment_id", segmentId);
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.chaptersUrl, jsonObject, this, this);
             RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
@@ -258,14 +261,25 @@ public class ChaptersFragment extends Fragment implements Response.Listener<JSON
 
         if (whichStream.equalsIgnoreCase("online")) {
 
-            Bundle bundle = new Bundle();
-            bundle.putString("videoPath", topicData.getTopicUrl());
-            bundle.putSerializable("topic", topicData);
-            bundle.putString("comingFrom", "online");
+            if(contentType.equalsIgnoreCase("test")|| contentType.equalsIgnoreCase("pdf")){
 
-            Fragment fragment = new FullScreenVideoFragment();
-            fragment.setArguments(bundle);
-            HelperMethods.showFragment(getActivity(), fragment,true);
+
+
+            }
+            else{
+
+                Bundle bundle = new Bundle();
+                bundle.putString("videoPath", topicData.getTopicUrl());
+                bundle.putSerializable("topic", topicData);
+                bundle.putString("comingFrom", "online");
+
+                Fragment fragment = new FullScreenVideoFragment();
+                fragment.setArguments(bundle);
+                HelperMethods.showFragment(getActivity(), fragment,true);
+
+            }
+
+
 
         } else if (whichStream.equalsIgnoreCase("offline")) {
 
@@ -307,4 +321,16 @@ public class ChaptersFragment extends Fragment implements Response.Listener<JSON
     }
 
 
+    @Override
+    public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
+
+        int count = expandableListView.getExpandableListAdapter().getChildrenCount(groupPosition);
+
+        if (count == 0){
+
+            Toast.makeText(getActivity(),"Currently no topics", Toast.LENGTH_SHORT).show();
+        }
+
+        return false;
+    }
 }

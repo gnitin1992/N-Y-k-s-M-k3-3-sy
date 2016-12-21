@@ -54,6 +54,7 @@ public interface Constants {
     //l
     //m
     //n
+    String NOTIFICATIONS_RECYCLER_ADAPTER = " NOTIFICATIONS RECYCLER ADAPTER ";
     //o
     String OFFLINE_CONTENT_FRAGMENT = " ONLINE CONTENT FRAGMENT ";
 
