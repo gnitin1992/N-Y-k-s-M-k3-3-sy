@@ -32,7 +32,7 @@ import java.util.List;
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     // Database version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "appManager";
@@ -45,7 +45,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_TOPICS_LIST = "tableTopicsList";
     private static final String TABLE_ACTIONS_LIST = "tableActionsList";
     private static final String TABLE_CENTERS_LIST = "tableCentersList";
-    private static final String TABLE_NOTIFICATIONS_LIST = "tableNotificaionsList";
+    private static final String TABLE_NOTIFICATIONS_LIST = "tableNotificationsList";
     private static final String TABLE_ASSESSMENT_LIST = "tableAssessmentList";
     private static final String TABLE_PDFS_LIST = "tablePdfList";
     private static final String TABLE_OFFLINE_VIDEOS_LIST = "tableOfflineVideosList";
@@ -64,6 +64,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     // keyStreamId as subject will also be mapped to course
     // segmentId as subject will also be mapped to segment
     private static final String KEY_SUBJECT_NAME = "subjectName";
+    private static final String KEY_SUBJECT_ICON = "subjectIcon";
 
     // columns of TABLE  MAIN CHAPTER LIST
     // chapters will be mapped to subjects so will refer to subject
@@ -126,6 +127,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String CREATE_TABLE_SUBJECTS_LIST = "CREATE TABLE IF NOT EXISTS " + TABLE_SUBJECTS_LIST + "("
                 + KEY_ID + " INTEGER PRIMARY KEY, "
                 + KEY_SUBJECT_NAME + " TEXT,"
+                + KEY_SUBJECT_ICON + " TEXT,"
                 + KEY_STREAM_ID + " INT,"
                 + KEY_SEGMENT_ID + " INT"
                 + ")";
@@ -237,6 +239,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_ID, subjectData.getStreamId());
         contentValues.put(KEY_SUBJECT_NAME, subjectData.getSubjectName());
+        contentValues.put(KEY_SUBJECT_ICON, subjectData.getSubjectIcon());
 
         // Inserting Row
         db.replace(TABLE_SUBJECTS_LIST, null, contentValues);
@@ -520,7 +523,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
                 SubjectData subjectData = new SubjectData(
                         cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2), cursor.getString(3));
+                        cursor.getString(2), cursor.getString(3),cursor.getString(4));
 
                 subjectDatas.add(subjectData);
             } while (cursor.moveToNext());

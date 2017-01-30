@@ -1,5 +1,7 @@
 package net.studiesmadesimple.nayaks.fcm;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 public class NayaksFirebaseInstanceIdService extends FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
+    private String refreshedToken;
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -38,7 +41,7 @@ public class NayaksFirebaseInstanceIdService extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(Constants.LOG_TAG, "Refreshed token: " + refreshedToken);
 
         // If you want to send messages to this application instance or

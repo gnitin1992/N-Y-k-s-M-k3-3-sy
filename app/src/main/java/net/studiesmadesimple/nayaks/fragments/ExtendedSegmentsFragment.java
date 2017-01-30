@@ -270,14 +270,18 @@ public class ExtendedSegmentsFragment extends Fragment implements Response.Liste
 
 //                if (contentType.equalsIgnoreCase("video")) {
 
+                String baseUrl = response.getString("content_path");
+
                     JSONArray jsonArray = response.getJSONArray("subject");
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String subjectId = jsonObject.getString("id");
                         String subjectName = jsonObject.getString("name");
+                        String fileName = jsonObject.getString("file_name");
 
-                        subjectsDatas.add(new SubjectData(subjectId, subjectName, streamId, segmentId));
+                        String icon = baseUrl+fileName;
+                        subjectsDatas.add(new SubjectData(subjectId, subjectName,icon,streamId, segmentId));
                     }
                     addSubjects();
 //                }
