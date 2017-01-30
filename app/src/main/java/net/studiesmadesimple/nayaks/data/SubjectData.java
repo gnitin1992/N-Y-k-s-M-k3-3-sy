@@ -6,11 +6,12 @@ package net.studiesmadesimple.nayaks.data;
 
 public class SubjectData {
 
-    String  subjectId,subjectName,streamId,segmentId;
+    String  subjectId,subjectName,subjectIcon,streamId,segmentId;
 
-    public SubjectData(String subjectId, String subjectName, String streamId, String segmentId) {
+    public SubjectData(String subjectId, String subjectName,String subjectIcon, String streamId, String segmentId) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
+        this.subjectIcon = subjectIcon;
         this.streamId = streamId;
         this.segmentId = segmentId;
     }
@@ -45,5 +46,13 @@ public class SubjectData {
 
     public void setSegmentId(String segmentId) {
         this.segmentId = segmentId;
+    }
+
+    public String getSubjectIcon() {
+        return subjectIcon;
+    }
+
+    public void setSubjectIcon(String subjectIcon) {
+        this.subjectIcon = subjectIcon;
     }
 }

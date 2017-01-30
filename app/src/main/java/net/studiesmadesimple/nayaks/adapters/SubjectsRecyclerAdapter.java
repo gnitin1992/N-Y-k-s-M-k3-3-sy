@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import net.studiesmadesimple.nayaks.R;
 import net.studiesmadesimple.nayaks.data.AssessmentData;
 import net.studiesmadesimple.nayaks.data.PDFData;
@@ -31,6 +33,7 @@ public class SubjectsRecyclerAdapter extends RecyclerView.Adapter<SubjectsRecycl
     private SubjectsRecyclerAdapterCallback callback;
     private List<AssessmentData> assessmentDatas;
     private List<PDFData> pdfDatas;
+    private ImageLoader imageLoader;
 
     public interface SubjectsRecyclerAdapterCallback{
 
@@ -55,6 +58,8 @@ public class SubjectsRecyclerAdapter extends RecyclerView.Adapter<SubjectsRecycl
         this.context = context;
         this.subjectDatas = subjectDatas;
         this.callback = callback;
+
+        imageLoader = ImageLoader.getInstance(); // Get singleton instance
 
         Log.d(Constants.LOG_TAG,Constants.SUBJECTS_RECYCLER_ADAPTER);
     }
@@ -83,7 +88,7 @@ public class SubjectsRecyclerAdapter extends RecyclerView.Adapter<SubjectsRecycl
     public void setViews(int position){
 
 
-
+        imageLoader.displayImage(subjectDatas.get(position).getSubjectIcon(), subjectAvatar);
         subject.setText(subjectDatas.get(position).getSubjectName());
 
         online.setTag("online_"+position);

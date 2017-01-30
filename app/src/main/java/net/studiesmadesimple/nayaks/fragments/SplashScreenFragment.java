@@ -95,6 +95,12 @@ public class SplashScreenFragment extends Fragment {
             fetchSegments();
         }
 
+        if(isSegmentsLoaded && isStreamsLoaded)
+        {
+
+            changeFragment();
+        }
+
 
 
         animateViews();
