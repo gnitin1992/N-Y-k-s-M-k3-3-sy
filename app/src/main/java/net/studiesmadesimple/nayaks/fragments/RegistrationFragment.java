@@ -40,7 +40,7 @@ import java.util.List;
  * Created by studiesmadesimple on 10/16/2016.
  */
 
-public class RegistrationFragment extends Fragment implements View.OnClickListener,
+public class  RegistrationFragment extends Fragment implements View.OnClickListener,
         Response.Listener<JSONObject>, Response.ErrorListener, AdapterView.OnItemSelectedListener {
 
     private View v;

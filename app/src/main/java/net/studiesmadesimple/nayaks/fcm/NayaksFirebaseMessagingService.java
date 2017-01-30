@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -59,27 +62,22 @@ public class NayaksFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-            Map<String,String> a = remoteMessage.getData();
-
-            Iterator it = a.entrySet().iterator();
-            while (it.hasNext()) {
-
-                Map.Entry pair = (Map.Entry)it.next();
-                notificationValues.add(pair.getValue().toString());
-                it.remove(); // avoids a ConcurrentModificationException
-            }
-
-
+            // DO THE OPERTAIONS;
             String messageId = remoteMessage.getMessageId();
             long messageSentTime = remoteMessage.getSentTime();
 
 
             Date date = new Date(messageSentTime);
-            Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+            Format format = new SimpleDateFormat(" dd/MM/yyyy HH:mm:ss");
             String abc =  format.format(date);
 
+            Map<String,String> xyz = remoteMessage.getData();
+            String t = xyz.get("title");
+            String tex = xyz.get("body");
 
-            sendNotification(messageId,notificationValues.get(0),notificationValues.get(1),abc);
+
+            sendNotification(messageId,t,tex,abc);
+
 
         }
 
@@ -87,8 +85,24 @@ public class NayaksFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
+            String messageId = remoteMessage.getMessageId();
+            long messageSentTime = remoteMessage.getSentTime();
 
-            sendNotification("123","FROM notifications","coming","17th");
+
+            Date date = new Date(messageSentTime);
+            Format format = new SimpleDateFormat(" dd/MM/yyyy HH:mm:ss");
+            String abc =  format.format(date);
+
+
+            Map<String,String> xyz = remoteMessage.getData();
+            String t = xyz.get("title");
+            String tex = xyz.get("text");
+
+//            sendNotification(messageId,t,tex,abc);
+            sendNotification(messageId,t,tex,abc);
+
+
+
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -118,8 +132,8 @@ public class NayaksFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        databaseHelper = new MyDatabaseHelper(getApplicationContext());
-        databaseHelper.addNotification(new NotificationData(notificationId,title,message,sentTime));
+//        databaseHelper = new MyDatabaseHelper(getApplicationContext());
+//        databaseHelper.addNotification(new NotificationData(notificationId,title,message,sentTime));
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

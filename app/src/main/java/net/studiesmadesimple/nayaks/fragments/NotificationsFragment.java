@@ -65,7 +65,7 @@ public class NotificationsFragment extends Fragment {
         findViews();
         measuringTheLayout();
 
-        fetchSubjects();
+        fetchNotifications();
 
         return v;
     }
@@ -95,9 +95,12 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    public void fetchSubjects() {
+    public void fetchNotifications() {
 
         databaseHelper = new MyDatabaseHelper(getActivity());
+
+        int count  = databaseHelper.getAllNotificationsCount();
+
         notificationsData = databaseHelper.getAllNotifications();
         if (notificationsData.size() == 0) {
 
