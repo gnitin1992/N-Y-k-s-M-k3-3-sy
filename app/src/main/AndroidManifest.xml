@@ -47,6 +47,9 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="net.studiesmadesimple.nayaks.service.RegisterFCMTokenService"
+            android:exported="false"/>
 
     </application>
 
