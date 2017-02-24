@@ -2,6 +2,7 @@ package net.studiesmadesimple.nayaks.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -21,8 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import net.studiesmadesimple.nayaks.R;
+import net.studiesmadesimple.nayaks.service.RegisterFCMTokenService;
 import net.studiesmadesimple.nayaks.utils.Constants;
 import net.studiesmadesimple.nayaks.utils.HelperMethods;
 
@@ -153,6 +156,14 @@ public class EnterUniqueIdFragment extends Fragment implements View.OnClickListe
                 editor.putString(Constants.UNIQUE_ID, uniqueId.getText().toString().trim());
                 editor.putString(Constants.STREAM_ID, streamId);
                 editor.putBoolean(Constants.UNIQUE_ID_ENTERED, true);
+
+
+                // since uniqueId will also be asked only once will only be done once
+                String newToken = FirebaseInstanceId.getInstance().getToken();
+                Intent registerFCMTokenService = new Intent(getActivity(), RegisterFCMTokenService.class);
+                registerFCMTokenService.putExtra(Constants.TOKEN, newToken);
+
+                getActivity().startService(registerFCMTokenService);
 
                 if (skip.equalsIgnoreCase("yes")) {
 

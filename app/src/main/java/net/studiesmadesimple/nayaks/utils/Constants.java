@@ -22,6 +22,8 @@ public interface Constants {
     String UNIQUE_ID_ENTERED = "uniqueIdEntered";
     String URL = "url";
     String USER_REGISTERED = "userRegistered";
+    String TOKEN = "token";
+    String IS_TOKEN_STORED = "isTokenStored";
 
     // all the activities
     String MAIN_ACTIVITY = " MAIN ACTIVITY ";

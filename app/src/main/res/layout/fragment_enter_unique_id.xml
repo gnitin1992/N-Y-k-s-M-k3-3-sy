@@ -6,14 +6,31 @@
     android:padding="@dimen/activity_horizontal_margin">
 
 
+    <ImageView
+        android:id="@+id/logo_image_enter_unique_id_fragment"
+        android:layout_width="@dimen/logo_size_mini"
+        android:layout_height="@dimen/logo_size_mini"
+        android:src="@drawable/logo_app"
+        android:padding="@dimen/logo_padding_mini"
+        android:layout_above="@id/footer_layout_enter_unique_id_fragment"
+        android:layout_centerHorizontal="true"
+        />
+
+    <include layout="@layout/layout_header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_above="@id/logo_image_enter_unique_id_fragment"
+        />
+
     <LinearLayout
         android:id="@+id/footer_layout_enter_unique_id_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true"
         android:padding="@dimen/logo_padding"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <EditText
             android:id="@+id/mobile_edit_enter_unique_id_fragment"
@@ -39,22 +56,6 @@
             android:text="@string/button_skip"
             />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/logo_image_enter_unique_id_fragment"
-        android:layout_width="@dimen/logo_size_mini"
-        android:layout_height="@dimen/logo_size_mini"
-        android:src="@drawable/logo_app"
-        android:padding="@dimen/logo_padding_mini"
-        android:layout_above="@id/footer_layout_enter_unique_id_fragment"
-        android:layout_centerHorizontal="true"
-        />
-
-    <include layout="@layout/layout_header"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_above="@id/logo_image_enter_unique_id_fragment"
-        />
 
 
 </RelativeLayout>
