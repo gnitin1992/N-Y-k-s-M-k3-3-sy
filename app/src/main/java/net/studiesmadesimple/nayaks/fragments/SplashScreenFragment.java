@@ -1,8 +1,7 @@
 package net.studiesmadesimple.nayaks.fragments;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -33,6 +32,7 @@ import net.studiesmadesimple.nayaks.data.ActionData;
 import net.studiesmadesimple.nayaks.data.NewSegmentsData;
 import net.studiesmadesimple.nayaks.data.NewStreamData;
 import net.studiesmadesimple.nayaks.database.MyDatabaseHelper;
+import net.studiesmadesimple.nayaks.service.RegisterFCMTokenService;
 import net.studiesmadesimple.nayaks.utils.Constants;
 import net.studiesmadesimple.nayaks.utils.GlobalVariables;
 import net.studiesmadesimple.nayaks.utils.HelperMethods;
@@ -42,6 +42,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by studiesmadesimple on 10/16/2016.
@@ -60,8 +62,25 @@ public class SplashScreenFragment extends Fragment {
     private List<ActionData> actionsData;
     private String[] actions = {"online", "offline", "downloadable"};
 
+    private boolean isStreamsLoaded, isSegmentsLoaded, isTokenRegistered;
 
-    private boolean isStreamsLoaded,isSegmentsLoaded;
+    public void clearSharePreference(){
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Constants.TOKEN);
+        editor.remove(Constants.IS_TOKEN_STORED);
+        editor.commit();
+
+    }
+
+    public boolean checkIfTokenRegistered() {
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME, MODE_PRIVATE);
+        boolean token = sharedPreferences.getBoolean(Constants.IS_TOKEN_STORED,false);
+
+        return token;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +88,9 @@ public class SplashScreenFragment extends Fragment {
         isStreamsLoaded = GlobalVariables.getInstance().isStreamsLoaded();
         isSegmentsLoaded = GlobalVariables.getInstance().isSegmentsLoaded();
         databaseHelper = new MyDatabaseHelper(getActivity());
+
+        isTokenRegistered = checkIfTokenRegistered();
+
 
     }
 
@@ -83,24 +105,30 @@ public class SplashScreenFragment extends Fragment {
 
         Log.d(Constants.LOG_TAG, Constants.SPLASH_SCREEN_FRAGMENT);
 
+        // we are doing this to get everyone on the same page
+        clearSharePreference();
+
+        registerDevice();
+
         getDeviceDetails();
+
         findViews();
+
         createActions();
-        if(!isSegmentsLoaded){
+
+        if (!isSegmentsLoaded) {
 
             fetchStreams();
         }
-        if (!isStreamsLoaded){
+        if (!isStreamsLoaded) {
 
             fetchSegments();
         }
 
-        if(isSegmentsLoaded && isStreamsLoaded)
-        {
+        if (isSegmentsLoaded && isStreamsLoaded) {
 
             changeFragment();
         }
-
 
 
         animateViews();
@@ -111,16 +139,36 @@ public class SplashScreenFragment extends Fragment {
         return v;
     }
 
-    public void getDeviceDetails(){
+    public void registerDevice() {
+
+        if (!isTokenRegistered) {
+
+            String newToken = FirebaseInstanceId.getInstance().getToken();
+
+            if(newToken != null){
+
+                Intent registerFCMTokenService = new Intent(getActivity(), RegisterFCMTokenService.class);
+                registerFCMTokenService.putExtra(Constants.TOKEN, newToken);
+
+                getActivity().startService(registerFCMTokenService);
+
+            }
+
+
+        }
+
+    }
+
+    public void getDeviceDetails() {
 
         String androidId = Settings.Secure.getString(getContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         String str = android.os.Build.MODEL;
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.DEVICE_ID,androidId);
-        editor.putString(Constants.DEVICE_NAME,str);
+        editor.putString(Constants.DEVICE_ID, androidId);
+        editor.putString(Constants.DEVICE_NAME, str);
         editor.commit();
 
 
@@ -162,7 +210,7 @@ public class SplashScreenFragment extends Fragment {
 
         }
 
-        databaseHelper.addSegment(new NewSegmentsData("000","Notifications","notification"));
+        databaseHelper.addSegment(new NewSegmentsData("000", "Notifications", "notification"));
 
         changeFragment();
 
@@ -239,7 +287,7 @@ public class SplashScreenFragment extends Fragment {
 
     public void fetchStreams() {
 
-        HelperMethods.showProgressDialog(getActivity(),Constants.APP_NAME,"Loading...");
+        HelperMethods.showProgressDialog(getActivity(), Constants.APP_NAME, "Loading...");
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.streamUrl, null, new Response.Listener<JSONObject>() {
             @Override
@@ -308,20 +356,18 @@ public class SplashScreenFragment extends Fragment {
             @Override
             public void run() {
 
-                SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(Constants.APP_NAME, MODE_PRIVATE);
                 if (sharedPreferences.getBoolean(Constants.MOBILE_NUMBER_VERIFIED, false)) {
 
                     if (sharedPreferences.getBoolean(Constants.UNIQUE_ID_ENTERED, false)) {
 
-
                         if (sharedPreferences.getBoolean(Constants.COUPON_VERIFIED, false)) {
 
-                            HelperMethods.showFragment(getActivity(), new SegmentsFragment(),false);
+                            HelperMethods.showFragment(getActivity(), new SegmentsFragment(), false);
 
-                        }
-                        else{
+                        } else {
 
-                            HelperMethods.showFragment(getActivity(), new StreamsFragment(),false);
+                            HelperMethods.showFragment(getActivity(), new StreamsFragment(), false);
                         }
 //                        else if(!sharedPreferences.getBoolean(Constants.IS_FIRST_TIME_USER, false)){
 //
@@ -329,27 +375,26 @@ public class SplashScreenFragment extends Fragment {
 //                        }
 
 
-
                     } else if (sharedPreferences.getBoolean(Constants.USER_REGISTERED, false)) {
 
 
                         if (sharedPreferences.getBoolean(Constants.COUPON_VERIFIED, false)) {
 
-                            HelperMethods.showFragment(getActivity(), new SegmentsFragment(),false);
+                            HelperMethods.showFragment(getActivity(), new SegmentsFragment(), false);
 
                         } else {
 
-                            HelperMethods.showFragment(getActivity(), new StreamsFragment(),false);
+                            HelperMethods.showFragment(getActivity(), new StreamsFragment(), false);
                         }
 
                     } else {
 
-                        HelperMethods.showFragment(getActivity(), new EnterUniqueIdFragment(),false);
+                        HelperMethods.showFragment(getActivity(), new EnterUniqueIdFragment(), false);
                     }
 
                 } else {
 
-                   HelperMethods.showFragment(getActivity(), new EnterMobileNumberFragment(),false);
+                    HelperMethods.showFragment(getActivity(), new EnterMobileNumberFragment(), false);
 
                 }
 
