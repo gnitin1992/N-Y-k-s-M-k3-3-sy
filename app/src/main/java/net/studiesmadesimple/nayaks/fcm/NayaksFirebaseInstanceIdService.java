@@ -1,10 +1,12 @@
 package net.studiesmadesimple.nayaks.fcm;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -44,6 +46,12 @@ public class NayaksFirebaseInstanceIdService extends FirebaseInstanceIdService {
         refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(Constants.LOG_TAG, "Refreshed token: " + refreshedToken);
 
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(Constants.APP_NAME,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.IS_TOKEN_STORED,false);
+        editor.commit();
+
+
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
@@ -59,7 +67,7 @@ public class NayaksFirebaseInstanceIdService extends FirebaseInstanceIdService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(final String token) {
         // TODO: Implement this method to send token to your app server.
 
         try{
@@ -77,11 +85,14 @@ public class NayaksFirebaseInstanceIdService extends FirebaseInstanceIdService {
                         String responsCode = response.getString("status");
                         if (responsCode.equalsIgnoreCase("200")) {
 
+                            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(Constants.APP_NAME,MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean(Constants.IS_TOKEN_STORED,true);
+                            editor.commit();
 
                         } else {
 
                             Log.d(Constants.LOG_TAG,"Something went wrong. Try again later. Notifications ");
-
 
                         }
 
@@ -100,6 +111,12 @@ public class NayaksFirebaseInstanceIdService extends FirebaseInstanceIdService {
                     Log.d(Constants.LOG_TAG,"Something went wrong. Try again later. Notifications "+error);
                 }
             });
+
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    5000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             requestQueue.add(jsonObjectRequest);
         }
@@ -108,8 +125,6 @@ public class NayaksFirebaseInstanceIdService extends FirebaseInstanceIdService {
             e.printStackTrace();
         }
 
-
     }
-
 
 }
