@@ -1,6 +1,7 @@
 package net.studiesmadesimple.nayaks.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,10 +23,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import net.studiesmadesimple.nayaks.R;
 import net.studiesmadesimple.nayaks.data.NewStreamData;
 import net.studiesmadesimple.nayaks.database.MyDatabaseHelper;
+import net.studiesmadesimple.nayaks.service.RegisterFCMTokenService;
 import net.studiesmadesimple.nayaks.utils.Constants;
 import net.studiesmadesimple.nayaks.utils.GlobalVariables;
 import net.studiesmadesimple.nayaks.utils.HelperMethods;
@@ -40,7 +43,7 @@ import java.util.List;
  * Created by studiesmadesimple on 10/16/2016.
  */
 
-public class  RegistrationFragment extends Fragment implements View.OnClickListener,
+public class RegistrationFragment extends Fragment implements View.OnClickListener,
         Response.Listener<JSONObject>, Response.ErrorListener, AdapterView.OnItemSelectedListener {
 
     private View v;
@@ -52,7 +55,8 @@ public class  RegistrationFragment extends Fragment implements View.OnClickListe
     private boolean isInternetAvailable, isStreamsLoaded;
     private MyDatabaseHelper databaseHelper;
     private List<NewStreamData> streamsData;
-    private List<String> streamsDataForSpinner = new ArrayList<String>();;
+    private List<String> streamsDataForSpinner = new ArrayList<String>();
+    ;
     private String selectedStreamId;
 
 
@@ -203,16 +207,16 @@ public class  RegistrationFragment extends Fragment implements View.OnClickListe
             if (!mobileNumber.equalsIgnoreCase("NA")) {
 
 
-                jsonObject.put("phone",mobileNumber);
+                jsonObject.put("phone", mobileNumber);
                 jsonObject.put("device_id", deviceId);
                 jsonObject.put("first_name", firstName.getText().toString().trim());
                 jsonObject.put("last_name", lastName.getText().toString().trim());
-                jsonObject.put("middle_name","");
+                jsonObject.put("middle_name", "");
                 jsonObject.put("stream_id", selectedStreamId);
 
             } else {
 
-                Toast.makeText(getActivity(),"Mobile number not verified",5000).show();
+                Toast.makeText(getActivity(), "Mobile number not verified", 5000).show();
                 return;
             }
 
@@ -256,20 +260,30 @@ public class  RegistrationFragment extends Fragment implements View.OnClickListe
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(Constants.USER_REGISTERED, true);
-                editor.putString(Constants.STREAM_ID,selectedStreamId);
+                editor.putString(Constants.STREAM_ID, selectedStreamId);
                 editor.commit();
 
-                HelperMethods.showFragment(getActivity(), new StreamsFragment(),false);
 
-            } else if(responseCode.equalsIgnoreCase("201")) {
+                // since registration will only be done once
+                String newToken = FirebaseInstanceId.getInstance().getToken();
+
+                Intent registerFCMTokenService = new Intent(getActivity(), RegisterFCMTokenService.class);
+                registerFCMTokenService.putExtra(Constants.TOKEN, newToken);
+
+                getActivity().startService(registerFCMTokenService);
+
+
+                HelperMethods.showFragment(getActivity(), new StreamsFragment(), false);
+
+
+            } else if (responseCode.equalsIgnoreCase("201")) {
 
                 String message = response.getString("message");
 
-                Toast.makeText(getActivity(),message, Toast.LENGTH_SHORT).show();
-            }
-            else{
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            } else {
 
-                Toast.makeText(getActivity(),"Something went wrong.Try again later.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Something went wrong.Try again later.", Toast.LENGTH_SHORT).show();
             }
 
         } catch (Exception e) {
